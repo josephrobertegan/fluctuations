@@ -5,6 +5,9 @@ function result = func_stat_dist(L_max,R_max,K_d)
 % large values of B_max (i.e. it avoids indeterminate forms of the type
 % inf/inf)
 
+% Check that user inputs are positive
+func_err_time_indep(L_max,R_max,K_d)
+
 % Calculate B_max and U_max
 B_max = min(L_max,R_max);
 U_max = max(L_max,R_max);

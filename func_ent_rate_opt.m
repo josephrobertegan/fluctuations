@@ -2,6 +2,9 @@ function result = func_ent_rate_opt(L_max,R_max,K_d)
 % Function to allow for the numerical calculation of the optimal K_d that 
 % maximises the entropy rate for fixed L_max and R_max.
 
+% Check that user inputs are positive
+func_err_time_indep(L_max,R_max,K_d)
+
 % Calculate the mean
 mean = func_mean(L_max,R_max,K_d);
 % Calculate the variance
