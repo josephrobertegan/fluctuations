@@ -15,14 +15,14 @@ pan_let_x_scale = -0.1;
 pan_let_y_scale = 1.15;
 
 % Set constants for positioning the sub-plots
-plot_sub_x_left = 0.1;
-plot_sub_x_right = 0.6;
+plot_sub_x_left = 0.09;
+plot_sub_x_right = 0.59;
 plot_sub_y_bottom = 0.1;
-plot_sub_y_top = 0.6;
+plot_sub_y_top = 0.59;
 
 % Set constants for the size of the sub-plots
-plot_sub_width = 0.395;
-plot_sub_height = 0.325;
+plot_sub_width = 0.4;
+plot_sub_height = 0.345;
 
 %%% General parameters required for calculating dose response
 
@@ -254,7 +254,7 @@ ax = gca;
 % Set the position of the axes
 ax.Position = [plot_sub_x_left, plot_sub_y_top, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt, 'Location', 'best', 'Interpreter', 'latex');
+l = legend(leg_txt, 'Location', 'northwest', 'Interpreter', 'latex');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
@@ -294,7 +294,7 @@ ax = gca;
 % Set the position of the axes
 ax.Position = [plot_sub_x_right, plot_sub_y_top, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt, 'Location', 'best', 'Interpreter', 'latex');
+l = legend(leg_txt, 'Location', 'northwest', 'Interpreter', 'latex');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
@@ -334,7 +334,7 @@ ax = gca;
 % Set the position of the axes
 ax.Position = [plot_sub_x_left, plot_sub_y_bottom, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt, 'Location', 'best', 'Interpreter', 'latex');
+l = legend(leg_txt, 'Location', 'northwest', 'Interpreter', 'latex');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
@@ -374,7 +374,7 @@ ax = gca;
 % Set the position of the axes
 ax.Position = [plot_sub_x_right, plot_sub_y_bottom, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt, 'Location', 'best', 'Interpreter', 'latex');
+l = legend(leg_txt, 'Location', 'northwest', 'Interpreter', 'latex');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend

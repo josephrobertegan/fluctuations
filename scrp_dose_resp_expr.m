@@ -9,18 +9,18 @@ close all
 clear
 
 % Set the constants for positioning the panel letters
-pan_let_x_scale = -0.1;
-pan_let_y_scale = 1.15;
+pan_let_x_scale = -0.085;
+pan_let_y_scale = 1.0;
 
 % Set the constants for positioning the sub-plots
-plot_sub_x_left = 0.1;
-plot_sub_x_right = 0.6;
-plot_sub_y_bottom = 0.1;
-plot_sub_y_top = 0.6;
+plot_sub_x_left = 0.11;
+plot_sub_y_bottom = 0.08;
+plot_sub_y_middle = 0.4;
+plot_sub_y_top = 0.72;
 
 % Set the constants for the size of the sub-plots
-plot_sub_width = 0.395;
-plot_sub_height = 0.325;
+plot_sub_width = 0.875;
+plot_sub_height = 0.27;
 
 % Set a scaling for extending the axes by a small fraction
 ax_scale = 0.05;
@@ -68,7 +68,8 @@ x_min_Andersen = min(dose_Andersen);
 % Calculate the extension to add to the x-axis
 x_ext_Andersen = ax_scale*(x_max_Andersen-x_min_Andersen);
 % Calculate the lower x axis value
-x_lower_Andersen = -1.5; % Hard-coded to fit legend in
+%x_lower_Andersen = -1.5; % Hard-coded to fit legend in
+x_lower_Andersen = -1.3; % Hard-coded to fit legend in
 % Calculate the upper x axis value
 x_upper_Andersen = x_max_Andersen + x_ext_Andersen;
 
@@ -94,7 +95,7 @@ response_Andersen(:,1) = data_Andersen.(char(data_Andersen.Properties.VariableNa
 % Calculate a vector of NaN values where 0 represents NaN and 1 otherwise
 index_nan_Andersen = ~isnan(response_Andersen(:,1));
 % Set the first subplot
-subplot(2,2,1)
+subplot(3,1,1)
 % Plot dose against response for first ligand (for all non NaN values)  
 plot(dose_Andersen(index_nan_Andersen), response_Andersen(index_nan_Andersen,1),...
      'Marker', '*', 'Color', plot_col(1,:));
@@ -118,106 +119,13 @@ ax = gca;
 % Set the position of the axes
 ax.Position = [plot_sub_x_left, plot_sub_y_top, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt_Andersen, 'Interpreter', 'latex', 'Location', 'best');
+l = legend(leg_txt_Andersen, 'Interpreter', 'latex', 'Location', 'northwest');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
 legend('boxoff')
-% Add the plot title
-title('Andersen $\emph{et al.}$ 2001', 'Interpreter', 'latex')
-% Add the x-axis label
-xlabel(x_lab, 'Interpreter', 'latex')
 % Add the y-axis label
-ylabel('NFAT activated T cells (\%)', 'Interpreter', 'latex')
-
-%%% Plot chmielewski2004 data
-
-% Set 3D Kd values taken from Chmielewski2004
-K_d_3D_Chmielewski = molar2micromolar*[1.5*10^(-11), 1.2*10^(-10), 1*10^(-9),...
-    1.6*10^(-8), 3.2*10^(-7)];
-% Set the legend text
-leg_txt_Chmielewski = {num2str(round(log10(K_d_3D_Chmielewski),1)')};
-
-% Set the name of the file containing the data
-file_name_Chmielewski = 'data_chmielewski_2004.csv';
-% Read the data
-data_Chmielewski = readtable(file_name_Chmielewski, 'ReadVariableNames', 1);
-
-% Calculate the total number of different ligands
-n_ligands_Chmielewski = length(data_Chmielewski.Properties.VariableNames) - 1;
-% Calculate the dose values of a log10 scale
-dose_Chmielewski = log10(data_Chmielewski.(char(data_Chmielewski.Properties.VariableNames(1))));
-% Calculate the total number of dose values
-n_dose_Chmielewski = length(dose_Chmielewski);
-
-% Calculate the maximum dose
-x_max_Chmielewski = max(dose_Chmielewski);
-% Calculate the minimum dose
-x_min_Chmielewski = min(dose_Chmielewski);
-% Calculate the extension to add to the x-axis
-x_ext_Chmielewski = ax_scale*(x_max_Chmielewski-x_min_Chmielewski);
-% Calculate the lower x-axis value
-x_lower_Chmielewski = -2; % Hard-coded to fit legend in
-% Calculate the upper x-axis value
-x_upper_Chmielewski = x_max_Chmielewski + x_ext_Chmielewski;
-
-% Get all of the response data
-response_data_Chmielewski = table2array(data_Chmielewski(:,2:end));
-% Calculate the minimum response data over all 2D dissociation constants
-% (i.e. different ligands) and ligand copy-numbers (i.e. different doses)
-y_min_Chmielewski = min(min(response_data_Chmielewski));
-% Calculate the maximum response data over all 2D dissociation constants
-% (i.e. different ligands) and ligand copy-numbers (i.e. different doses)
-y_max_Chmielewski = max(max(response_data_Chmielewski));
-% Calculate the extension to add to the y-axis
-y_ext_Chmielewski = ax_scale*(y_max_Chmielewski-y_min_Chmielewski);
-% Calculate the lower y-axis value
-y_lower_Chmielewski = y_min_Chmielewski - y_ext_Chmielewski;
-% Calculate the upper y-axis value
-y_upper_Chmielewski = y_max_Chmielewski + y_ext_Chmielewski;
-
-% Set a storage matrix for analysing the response data
-response_Chmielewski = zeros(n_dose_Chmielewski, n_ligands_Chmielewski);
-% Get response data from first ligand
-response_Chmielewski(:,1) = data_Chmielewski.(char(data_Chmielewski.Properties.VariableNames(2)));
-% Calculate a vector of NaN values where 0 represents NaN and 1 otherwise
-index_nan_Chmielewski = ~isnan(response_Chmielewski(:,1));
-% Set the second subplot
-subplot(2,2,2)
-% Plot dose against response for first ligand (for all non NaN values)
-plot(dose_Chmielewski(index_nan_Chmielewski), response_Chmielewski(index_nan_Chmielewski,1),...
-     'Marker', '*', 'Color', plot_col(1,:));
- % Loop through remaining ligands and plot dose response as above
-for i=1:(n_ligands_Chmielewski-1)
-    response_Chmielewski(:,i+1) = data_Chmielewski.(char(data_Chmielewski.Properties.VariableNames(i+2)));
-    index_nan_Chmielewski = ~isnan(response_Chmielewski(:,i+1));
-    line(dose_Chmielewski(index_nan_Chmielewski), response_Chmielewski(index_nan_Chmielewski,i+1),...
-        'Marker', '*', 'Color', plot_col(i+1,:))
-end
-% Set the x-axis limits
-xlim([x_lower_Chmielewski, x_upper_Chmielewski])
-% Set the y-axis limits
-ylim([y_lower_Chmielewski,y_upper_Chmielewski])
-% Add the panel letter
-text(x_lower_Chmielewski + pan_let_x_scale*(x_upper_Chmielewski-x_lower_Chmielewski),...
-    y_lower_Chmielewski + pan_let_y_scale*(y_upper_Chmielewski-y_lower_Chmielewski),...
-    '\fontsize{12} \bf b')
-% Get the current axis handle
-ax = gca;
-% Set the position of the axes
-ax.Position = [plot_sub_x_right, plot_sub_y_top, plot_sub_width, plot_sub_height];
-% Add the legend text
-l = legend(leg_txt_Chmielewski, 'Interpreter', 'latex', 'Location', 'best');
-% Add the legend title
-title(l, leg_tit, 'Interpreter', 'latex')
-% Remove the box surrounding the legend
-legend('boxoff')
-% Add the plot title
-title('Chmielewski $\emph{et al.}$ 2004', 'Interpreter', 'latex')
-% Add the x-axis label
-xlabel(x_lab, 'Interpreter', 'latex')
-% Add the y-axis label
-ylabel('IFN$\gamma$ (ng/ml)', 'Interpreter', 'latex')
+ylabel({'NFAT activated'; 'T cells (\%)'}, 'Interpreter', 'latex')
 
 %%% Plot mcmahan2006 data
 
@@ -245,7 +153,7 @@ x_min_McMahan = min(dose_McMahan);
 % Calculate the extension to add to the x-axis
 x_ext_McMahan = ax_scale*(x_max_McMahan-x_min_McMahan);
 % Calculate the lower x-axis value
-x_lower_McMahan = -10; % Hard-coded to fit legend in
+x_lower_McMahan = -8.5; % Hard-coded to fit legend in
 % Calculate the upper x-axis value
 x_upper_McMahan = x_max_McMahan + x_ext_McMahan;
 
@@ -273,7 +181,7 @@ response_McMahan(:,1) = permin2persec*data_McMahan.(char(data_McMahan.Properties
 % Calculate a vector of NaN values where 0 represents NaN and 1 otherwise
 index_nan_McMahan = ~isnan(response_McMahan(:,1));
 % Set the third subplot
-subplot(2,2,3)
+subplot(3,1,2)
 % Plot dose against response for first ligand (for all non NaN values)
 plot(dose_McMahan(index_nan_McMahan), response_McMahan(index_nan_McMahan,1),...
      'Marker', '*', 'Color', plot_col(1,:));
@@ -292,23 +200,19 @@ ylim([y_lower_McMahan,y_upper_McMahan])
 % Add the panel letter
 text(x_lower_McMahan + pan_let_x_scale*(x_upper_McMahan-x_lower_McMahan),...
     y_lower_McMahan + pan_let_y_scale*(y_upper_McMahan-y_lower_McMahan),...
-    '\fontsize{12} \bf c')
+    '\fontsize{12} \bf b')
 % Get the current axis handle
 ax = gca;
 % Set the position of the axes
-ax.Position = [plot_sub_x_left, plot_sub_y_bottom, plot_sub_width, plot_sub_height];
+ax.Position = [plot_sub_x_left, plot_sub_y_middle, plot_sub_width, plot_sub_height];
 % Add the legend text
-l = legend(leg_txt_McMahan, 'Interpreter', 'latex', 'Location', 'best');
+l = legend(leg_txt_McMahan, 'Interpreter', 'latex', 'Location', 'northwest');
 % Add the legend title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
 legend('boxoff')
-% Add the plot title
-title('McMahan $\emph{et al.}$ 2006', 'Interpreter', 'latex')
-% Add the x-axis label
-xlabel(x_lab, 'Interpreter', 'latex')
 % Add the y-axis label
-ylabel('T cell proliferation (cycles/s)', 'Interpreter', 'latex')
+ylabel({'T cell proliferation'; '(cycles/s)'}, 'Interpreter', 'latex')
 
 %%% Plot mean of previously unpublished Abu-Shah data
 
@@ -388,7 +292,7 @@ response_AbuShah(:,1) = pg2ng*data_AbuShah.(char(data_AbuShah.Properties.Variabl
 % Calculate a vector of NaN values where 0 represents NaN and 1 otherwise
 index_nan_AbuShah = ~isnan(response_AbuShah(:,1));
 % Set the fourth subplot
-subplot(2,2,4)
+subplot(3,1,3)
 % Plot dose against response for first ligand (for all non NaN values)
 plot(dose_AbuShah(index_nan_AbuShah), response_AbuShah(index_nan_AbuShah,1),...
      'Marker', '*', 'Color', plot_col(1,:));
@@ -407,23 +311,21 @@ ylim([y_lower_AbuShah,y_upper_AbuShah])
 % Add the panel letter
 text(x_lower_AbuShah + pan_let_x_scale*(x_upper_AbuShah-x_lower_AbuShah),...
     y_lower_AbuShah + pan_let_y_scale*(y_upper_AbuShah-y_lower_AbuShah),...
-    '\fontsize{12} \bf d')
+    '\fontsize{12} \bf c')
 % Get the current axis handle
 ax = gca;
 % Set the position of the axes
-ax.Position = [plot_sub_x_right, plot_sub_y_bottom, plot_sub_width, plot_sub_height];
+ax.Position = [plot_sub_x_left, plot_sub_y_bottom, plot_sub_width, plot_sub_height];
 % Set the position of the axes
-l = legend(leg_txt_AbuShah, 'Interpreter', 'latex', 'Location', 'best');
+l = legend(leg_txt_AbuShah, 'Interpreter', 'latex', 'Location', 'northwest');
 % Add the plot title
 title(l, leg_tit, 'Interpreter', 'latex')
 % Remove the box surrounding the legend
 legend('boxoff')
-% Add the plot title
-title('Previously unpublished data', 'Interpreter', 'latex')
 % Add the x-axis label
 xlabel(x_lab, 'Interpreter', 'latex')
 % Add the y-axis label
-ylabel('IL-2 (ng/ml)', 'Interpreter', 'latex')
+ylabel({'IL-2 production';'(ng/ml)'}, 'Interpreter', 'latex')
 
 %%% Write figure to file
 
