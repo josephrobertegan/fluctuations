@@ -1,7 +1,9 @@
 # fluctuations
 Data and MATLAB code for reproducing the figures in the 'fluctuations' paper.
 
-This repository relates to the paper entitled "Fluctuations in TCR and pMHC interactions regulate T cell activation".
+This repository relates to the paper entitled "Fluctuations in T cell receptor and pMHC interactions regulate T cell activation" published in the Journal of the Royal Society Interface at the following URL:
+
+https://royalsocietypublishing.org/doi/10.1098/rsif.2021.0589
 
 The MATLAB files entitled "scrp_stoc_sim.m", "scrp_dose_resp_ther.m" and "scrp_dose_resp_expr.m" are scripts that reproduce figures 2, 3 and 4, respectively. Note that the first and the last of these scripts are very quick to run (of the order of seconds) whereas the second script takes much longer to run (of the order of a few hours) due to the repeated stochastic simulations that are undertaken.
 
